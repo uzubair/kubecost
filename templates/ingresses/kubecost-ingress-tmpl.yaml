@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kubecost
+  namespace: kubecost
+  labels:
+    app.kubernetes.io/name: kubecost
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: "${certificate_arn}"
+    alb.ingress.kubernetes.io/healthcheck-path: /-/healthy
+    external-dns.alpha.kubernetes.io/hostname: kubecost.${hostname_stem}
+    alb.ingress.kubernetes.io/tags: >
+      Name=kubecost,
+      LOB=coresystems,
+      Application=kubecost,
+      Owner=coresystems,
+      Environment=${environment},
+      Managed-By=aws-alb-ingress-controller
+spec:
+  rules:
+    - host: kubecost.${hostname_stem}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kubecost-cost-analyzer
+                port:
+                  number: 9090
+

@@ -1,0 +1,31 @@
+
+global:
+  prometheus:
+    enabled: false # Use already deployed Prometheus
+    fqdn: "${prometheus_url}"
+  grafana:
+    enabled: false # Use already deployed Grafana
+    proxy: false
+
+kubecostProductConfigs:
+  # productKey:
+  #   key: "${kubecost_token}"
+  #   enabled: true
+  clusterName: "${cluster_name}"
+
+networkCosts:
+  enabled: true
+  scrapeTimeout: 10s
+  prometheusScrape: true
+
+prometheus:
+  nodeExporter:
+    enabled: false
+  serviceAccounts:
+    nodeExporter:
+      create: false
+  kubeStateMetrics:
+    enabled: false
+
+prometheusRule:
+  enabled: true
