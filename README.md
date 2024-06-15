@@ -1,4 +1,7 @@
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+# kubecost
+Kubecost is a cost management tool designed specifically for Kubernetes environments. It provides real-time cost visibility and insights into your Kubernetes clusters, helping you monitor, manage, and optimize your cloud spending.
+
 ## Requirements
 
 | Name | Version |
